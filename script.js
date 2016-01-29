@@ -5,7 +5,6 @@
 $(document).ready(function(){
    var Game = function() {
       var that = this;
-      this.power = false;
       this.strict = false;
       this.sequence = [];
       this.playerTurn = false;
@@ -13,30 +12,21 @@ $(document).ready(function(){
 
       var audioElement = document.createElement('audio');
 
-      // Toggle game power On/Off
-      this.switchPower = function() {
-         this.power = !this.power;
-         if (!this.power) {
-            this.strict = false;
-            this.sequence = [];
-            this.updateCount();
-         }
-      }
-
       // Start a New Game
       this.startGame = function() {
-         if (this.power) {
-            this.playerTurn = false;
-            this.sequence = [];
-            this.checkTurn();
-         }
+         this.playerTurn = false;
+         this.sequence = [];
+         this.checkTurn();
       }
 
       // Toggles Strict Mode On/Off
       this.strictModeToggle = function() {
-         if (this.power) {
-            this.strict = !this.strict;
-         }
+         this.strict = !this.strict;
+      }
+
+      this.clearScore = function () {
+         this.sequence = [];
+         this.updateCount();
       }
 
       // Check whose turn it is.  If it's player's, empty player sequence, else, add a step
@@ -77,10 +67,12 @@ $(document).ready(function(){
 
       // Helper method to play a sound for the button click
       this.playSound = function(id) {
-         if (!id) {
-            audioElement.setAttribute('src', 'sounds/wrong.mp3');
-         } else {
-            audioElement.setAttribute('src', 'sounds/simonSound' + id + '.mp3');
+         if (typeof id !== 'undefined') {
+            if (!id) {
+               audioElement.setAttribute('src', 'sounds/wrong.mp3');
+            } else {
+               audioElement.setAttribute('src', 'sounds/simonSound' + id + '.mp3');
+            }
          }
          audioElement.play();
       }
@@ -145,6 +137,7 @@ $(document).ready(function(){
 
       // Helper function to check sequences.  Checks the last input to see if it matches Simon's sequence
       var checkSequences = function(game) {
+         console.log(game.playerSequence, game.sequence);
          var last = game.playerSequence.length-1;
          if (game.playerSequence[last] !== game.sequence[last]) {
             return false;
@@ -154,7 +147,7 @@ $(document).ready(function(){
       }
    }
 
-   var game = new Game();
+   var game; 
 
    $('#gameStartButton').on('click', function() {
       game.startGame();
@@ -162,14 +155,17 @@ $(document).ready(function(){
 
    $('#powerswitch').on('click', function() {
       if ($(this).hasClass('on')) {
-         $(this).removeClass('on');
-         $('#strictMode').removeClass('on');
-         $('#game').removeClass('on');
+         $('.on').removeClass('on');
+         $('.button').removeClass('beep');
+         game.clearScore();
+         clearTimeout();
+         clearInterval();
+         game = null;
       } else {
          $(this).addClass('on');
          $('#game').addClass('on');
+         game = new Game();
       }
-      game.switchPower();
    });
 
    $('#strictModeToggle').on('click', function() {
@@ -185,7 +181,8 @@ $(document).ready(function(){
    });
 
    $('.button').on('click', function() {
-      if (game.playerTurn && game.power) {
+      // if it's player's turn, input command
+      if (game.playerTurn) {
          game.playerSays($(this));
       }
    });
