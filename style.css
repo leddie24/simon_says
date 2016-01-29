@@ -1,0 +1,185 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+h1 {
+   margin: 24px 0 0px;
+   font-size: 36px;
+}
+
+#b1 {
+   border-top-left-radius: 100%;
+   border-right-width: 5px;
+   border-bottom-width: 5px;
+   background: #00A74A;
+}
+
+#b1.beep, #game.on #b1:active {
+   background: #03E869;
+}
+
+#b2 {
+   border-top-right-radius: 100%;
+   border-left-width: 5px;
+   border-bottom-width: 5px;
+   background: #9F0F17;
+}
+
+#b2.beep, #game.on #b2:active {
+   background: #CF0C15;
+}
+
+#b3 {
+   border-bottom-left-radius: 100%;
+   border-right-width: 5px;
+   border-top-width: 5px;
+   background: #CCA707;
+}
+
+#b3.beep, #game.on #b3:active {
+   background: #F9CE05;
+}
+
+#b4 {
+   border-bottom-right-radius: 100%;
+   border-left-width: 5px;
+   border-top-width: 5px;
+   background: #094A8F;
+}
+
+#b4.beep, #game.on #b4:active {
+   background: #0664C5;
+}
+
+#game {
+   width: 550px;
+   height: 550px;
+   margin: 0 auto;
+   position: relative;
+}
+
+.button {
+   width: 50%;
+   height: 275px;
+   border: 15px solid #333333;
+   float: left;
+   -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+   -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+   box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+   padding: 20px;
+}
+
+#center {
+   font-family: 'Oswald', sans-serif;
+   text-align: center;
+   border-radius: 100%;
+   background: #fff;
+   border: 10px solid #333333;
+   width: 225px;
+   height: 225px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-top: -112.5px;
+   margin-left: -112.5px;
+}
+
+#controls {
+   width: 80%;
+   margin: 0 auto;
+}
+
+#controls > div {
+   width: 32%;
+   display: inline-block;
+}
+
+#controls label {
+   margin-top: 5px;
+   text-transform: uppercase;
+   font-size: 12px;
+   display: block;
+}
+
+#counter {
+   padding: 5px 3px;
+   border-radius: 4px;
+   background: #32050C;
+   color: #DC0D29;
+}
+
+.c_button {
+   border-radius: 100%;
+   width: 20px;
+   height: 20px;
+   border: 3px solid #333;
+   display: inline-block;
+   margin-bottom: 5px;
+   -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+   -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+   box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+}
+
+.c_button:hover {
+   cursor: pointer;
+}
+
+#gameStartButton {
+   background: #FC0102;
+}
+
+#strictModeToggle {
+   background: #FFFF00;
+}
+
+#strictLight {
+   display: block;
+}
+
+#strictLight div {
+   display: inline-block;
+   border-radius: 100%;
+   width: 6px;
+   height: 6px;
+   border: 1px solid #333;
+   margin-bottom: 5px;
+}
+
+#strictMode.on #strictLight div {
+   background: red;
+}
+
+#power {
+   text-transform: uppercase;
+}
+
+#powerswitch {
+   display: inline-block;
+   background: #333;
+   vertical-align: middle;
+   width: 40px;
+   height: 20px;
+   text-align: left;
+   padding: 1.5px;
+}
+
+#powerswitch {
+   text-align: right;
+}
+
+#powerswitch.on {
+   text-align: left;
+}
+
+#powerswitch div {
+   vertical-align: top;
+   display: inline-block;
+   background: #0975B5;
+   border-radius: 3px;
+   width: 50%;
+   height: 100%;
+}

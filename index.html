@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Simon Says</title>
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <script src="script.js"></script>
+   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+   <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+   <div id="game">
+      <div class="top">
+         <div id="b1" data-id="1" class="button">
+
+         </div>
+         <div id="b2" data-id="2" class="button">
+
+         </div>
+      </div>
+      <div id="center">
+         <h1>Simon</h1>
+         <div id="controls">
+            <div id="counter_contain">
+               <div id="counter">- -</div>
+               <label>Count</label>
+            </div>
+            <div id="gameStart">
+               <div id="gameStartButton" class="c_button"></div>
+               <label>Start</label>
+            </div>
+            <div id="strictMode">
+               <div id="strictLight">
+                  <div></div>
+               </div>
+               <div id="strictModeToggle" class="c_button"></div>
+               <label>Strict</label>
+            </div>
+         </div>
+         <div id="power">
+            <label>
+               On
+            </label>
+            <div id="powerswitch">
+               <div id="switch"></div>
+            </div>
+            <label>
+               Off
+            </label>
+         </div>
+      </div>
+      <div class="bottom">
+         <div id="b3" data-id="3" class="button">
+
+         </div>
+         <div id="b4" data-id="4" class="button">
+
+         </div>
+      </div>
+   </div>
+</body>
+</html>
