@@ -3,14 +3,32 @@
 // Simon Says game for Free Code Camp
 
 $(document).ready(function(){
+   var sounds = [1, 2, 3, 4, 'wrong'];
+   var soundsPlayer = function() {
+      this.sounds = [];
+      this.playSound = function(id) {
+         this.sounds[id].play();
+      }
+   }
+
+   var sp = new soundsPlayer();
+
+
+   for (var i = 0; i < sounds.length; i++) {
+      if (sounds[i] !== 'wrong') {
+         var audio = new Audio('./sounds/simonSound' + sounds[i] + '.mp3');
+      } else {
+         var audio = new Audio('./sounds/' + sounds[i] + '.mp3');
+      }
+      sp.sounds[i] = audio;
+   }
+
    var Game = function() {
       var that = this;
       this.strict = false;
       this.sequence = [];
       this.playerTurn = false;
       this.playerSequence = [];
-
-      var audioElement = document.createElement('audio');
 
       // Start a New Game
       this.startGame = function() {
@@ -68,13 +86,14 @@ $(document).ready(function(){
       // Helper method to play a sound for the button click
       this.playSound = function(id) {
          if (typeof id !== 'undefined') {
+            console.log(id);
             if (!id) {
-               audioElement.setAttribute('src', 'sounds/wrong.mp3');
+               sp.playSound(4);
             } else {
-               audioElement.setAttribute('src', 'sounds/simonSound' + id + '.mp3');
+               id = id - 1;
+               sp.playSound(id);
             }
          }
-         audioElement.play();
       }
 
       // Helper method to light up button (and play sound)
