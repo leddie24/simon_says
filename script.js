@@ -3,7 +3,60 @@
 // Simon Says game for Free Code Camp
 
 $(document).ready(function(){
+   function loaded(blob_uri) {
+      var audio = new Audio(blob_uri);
+      sp.sounds.push(audio);
+   }
+
+   function prefetch_file(url,
+                          fetched_callback,
+                          progress_callback,
+                          error_callback) {
+     var xhr = new XMLHttpRequest();
+     xhr.open("GET", url, true);
+     xhr.responseType = "blob";
+
+     xhr.addEventListener("load", function () {
+       if (xhr.status === 200) {
+         var URL = window.URL || window.webkitURL;
+         var blob_url = URL.createObjectURL(xhr.response);
+         fetched_callback(blob_url);
+       } else {
+         error_callback();
+       }
+     }, false);
+
+     var prev_pc = 0;
+     xhr.addEventListener("progress", function(event) {
+       if (event.lengthComputable) {
+         var pc = Math.round((event.loaded / event.total) * 100);
+         if (pc != prev_pc) {
+           prev_pc = pc;
+           progress_callback(pc);
+         }
+       }
+     });
+     xhr.send();
+   }
+
+
    var sounds = [1, 2, 3, 4, 'wrong'];
+   for (var i = 0; i < sounds.length; i++) {
+      if (sounds[i] !== 'wrong') {
+         var resource = document.createElement("audio").canPlayType("audio/mp3")
+                   ? "./sounds/simonSound" + sounds[i] + ".mp3" : "";
+         prefetch_file(resource, loaded, function(pc) {
+            console.log(pc);
+         });
+      } else {
+         var resource = document.createElement("audio").canPlayType("audio/mp3")
+                   ? "./sounds/" + sounds[i] + ".mp3" : "";
+         prefetch_file(resource, loaded, function(pc) {
+            console.log(pc);
+         });
+      }
+   }
+
    var soundsPlayer = function() {
       this.sounds = [];
       this.playSound = function(id) {
@@ -12,16 +65,6 @@ $(document).ready(function(){
    }
 
    var sp = new soundsPlayer();
-
-
-   for (var i = 0; i < sounds.length; i++) {
-      if (sounds[i] !== 'wrong') {
-         var audio = new Audio('./sounds/simonSound' + sounds[i] + '.mp3');
-      } else {
-         var audio = new Audio('./sounds/' + sounds[i] + '.mp3');
-      }
-      sp.sounds[i] = audio;
-   }
 
    var Game = function() {
       var that = this;
@@ -127,7 +170,6 @@ $(document).ready(function(){
                }, 800);
                return false;
             } else {
-               console.log('WRONG ANSWER');
                this.playerSequence = [];
                setTimeout(function() {
                   that.doSequence();
@@ -156,7 +198,6 @@ $(document).ready(function(){
 
       // Helper function to check sequences.  Checks the last input to see if it matches Simon's sequence
       var checkSequences = function(game) {
-         console.log(game.playerSequence, game.sequence);
          var last = game.playerSequence.length-1;
          if (game.playerSequence[last] !== game.sequence[last]) {
             return false;
